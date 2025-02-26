@@ -1,3 +1,6 @@
 node_modules/
 dist/
 .nx/
+.flox/cache
+.flox/log
+.flox/run
