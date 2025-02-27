@@ -1,6 +1,9 @@
 # Базовый образ для сборки
 FROM node:22.7-alpine AS build
 
+ARG SOURCE_DATE_EPOCH=1700000000
+ENV TZ=UTC
+
 RUN apk add --no-cache python3 make g++
 
 # Рабочая директория
@@ -15,7 +18,7 @@ COPY packages/backend/package*.json ./packages/backend/
 COPY packages/server/package*.json ./packages/server/
 
 # Устанавливаем зависимости в корневой директории
-RUN npm install
+RUN npm ci && npm cache clean --force
 
 # Копируем остальные файлы проекта
 COPY . .
@@ -51,4 +54,4 @@ RUN npx prisma migrate deploy
 EXPOSE 8080
 
 # Запускаем сервер
-CMD ["sh", "-c", "npm run start:server"]
+# CMD ["sh", "-c", "npm run start:server"]
