@@ -1,8 +1,8 @@
 # Базовый образ для сборки
 FROM node:22.7-alpine AS build
 
-ARG SOURCE_DATE_EPOCH=1700000000
-ENV TZ=UTC
+# ARG SOURCE_DATE_EPOCH=1700000000
+# ENV TZ=UTC
 
 RUN apk add --no-cache python3 make g++
 
@@ -18,13 +18,13 @@ COPY packages/backend/package*.json ./packages/backend/
 COPY packages/server/package*.json ./packages/server/
 
 # Устанавливаем зависимости в корневой директории
-RUN npm ci && npm cache clean --force
+RUN npm ci
 
 # Копируем остальные файлы проекта
 COPY . .
 
 # Выполняем сборку всех пакетов
-RUN npm run build:hosted
+RUN npm run build
 
 # Образ для client
 FROM nginx:alpine AS client
