@@ -18,7 +18,7 @@ COPY packages/backend/package*.json ./packages/backend/
 COPY packages/server/package*.json ./packages/server/
 
 # Устанавливаем зависимости в корневой директории
-RUN npm ci
+# RUN npm ci
 
 # Копируем остальные файлы проекта
 COPY . .
